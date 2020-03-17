@@ -22,14 +22,14 @@ const gameBoard = (() => {
 
     const makeMove = (e) => {
         const position = e.target.id.slice(-1);
-        if (state[position] !== null || isOver()) return;
+        if (state[position] !== null || gameOver()) return;
 
         state[position] = (firstPlayersTurn()) ? playerOne.symbol : playerTwo.symbol;
         turnCounter++;
 
         displayController.updateBoard(state);
 
-        if (isOver()) {
+        if (gameOver()) {
             if (winner) {
                 displayController.announce(`${winner.name} wins!`);
             } else {
@@ -43,7 +43,7 @@ const gameBoard = (() => {
 
     }
 
-    const isOver = () => {
+    const gameOver = () => {
         if (!state.includes(null)) return true;
 
         for (let winningPattern of winningPatterns) {
